@@ -10,9 +10,9 @@ def main():
     load_dotenv()
 
     BASE_URL = 'https://dvmn.org/api/long_polling/'
-    DEVMAN_TOKEN = os.getenv('AUTH_TOKEN')
-    BOT_TOKEN = os.getenv('BOT_TOKEN')
-    CHAT_ID = os.getenv('CHAT_ID')
+    DEVMAN_TOKEN = os.environ('AUTH_TOKEN')
+    BOT_TOKEN = os.environ('BOT_TOKEN')
+    CHAT_ID = os.environ('CHAT_ID')
     HEADERS = {
     'Authorization': 'Token {}'.format(DEVMAN_TOKEN)
     }
