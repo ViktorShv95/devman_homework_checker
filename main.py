@@ -3,6 +3,7 @@ import requests
 from requests import exceptions
 from dotenv import load_dotenv
 import telegram
+import logging
 
 
 def main():
@@ -19,8 +20,26 @@ def main():
     params = {}
 
     bot = telegram.Bot(token=BOT_TOKEN)
+
+    class LogsHandler(logging.Handler):
+
+        def __init__(self, bot, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.bot = bot
+
+        def emit(self, record):
+            log_entry = self.format(record)
+            self.bot.send_message(chat_id=CHAT_ID, text=log_entry)
+
+
+    logger = logging.getLogger('DevmanLogger')
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(LogsHandler(bot))
+    logger.warning('Бот запущен')
+
     
     while True:
+
         try:
             response = requests.get(BASE_URL, headers=HEADERS, params=params)
             response.raise_for_status()
@@ -46,7 +65,7 @@ def main():
                 params['timestamp'] = data['timestamp_to_request']
 
         except (exceptions.ReadTimeout, exceptions.ConnectionError) as error:
-            bot.send_message(chat_id=CHAT_ID, text=f'Бот упал с ошибкой {error}')
+            logger.warning(chat_id=CHAT_ID, text=f'Бот упал с ошибкой: {error}')
             continue
 
 
