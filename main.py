@@ -35,7 +35,7 @@ def main():
     logger = logging.getLogger('DevmanLogger')
     logger.setLevel(logging.DEBUG)
     logger.addHandler(LogsHandler(bot))
-    logger.warning('Бот запущен')
+    logger.info('Бот запущен')
 
     
     while True:
@@ -64,8 +64,8 @@ def main():
             elif data['status'] == 'timeout':
                 params['timestamp'] = data['timestamp_to_request']
 
-        except (exceptions.ReadTimeout, exceptions.ConnectionError) as error:
-            logger.warning(chat_id=CHAT_ID, text=f'Бот упал с ошибкой: {error}')
+        except exceptions.ConnectionError:
+            logger.exception(chat_id=CHAT_ID, text=f'Бот упал с ошибкой:')
             continue
 
 
