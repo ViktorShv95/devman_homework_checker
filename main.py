@@ -64,7 +64,7 @@ def main():
             elif data['status'] == 'timeout':
                 params['timestamp'] = data['timestamp_to_request']
 
-        except exceptions.ConnectionError:
+        except Exception:
             logger.exception(chat_id=CHAT_ID, text=f'Бот упал с ошибкой:')
             continue
 
