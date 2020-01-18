@@ -66,6 +66,10 @@ def main():
                 
         except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError):
             continue
+        except Exception as error:
+            logger.exception('Ошибка!')
+            bot.send_message(chat_id=CHAT_ID, text=f'Бот упал с ошибкой:\n{error}')
+            continue
 
 
 if __name__ == '__main__':
