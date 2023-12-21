@@ -50,7 +50,7 @@ def main():
                 new_attempt = data['new_attempts'][0]
                 is_negative = new_attempt['is_negative']
                 lesson_title = new_attempt['lesson_title']
-                lesson_url = f'https://dvmn.org{new_attempt["lesson_url"]}'
+                lesson_url = new_attempt["lesson_url"]
 
                 if is_negative:
                     bot.send_message(chat_id=CHAT_ID,
